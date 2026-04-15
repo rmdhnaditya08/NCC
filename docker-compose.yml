@@ -1,0 +1,11 @@
+services:
+  webhook-logger:
+    build: .
+    container_name: webhook-logger
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=production
+    volumes:
+      - ./logs:/app/logs
