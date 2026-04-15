@@ -189,31 +189,22 @@ docker push rmdhnaditya08/webhook-logger:latest
 ### 5.2 Pull dan Jalankan di VPS
 
 ```bash
-# Pull image terbaru
-sudo docker pull rmdhnaditya08/webhook-logger:latest
-
-# Jalankan container dengan port forwarding 5000
-sudo docker run -d -p 5000:5000 --name webhook-logger \
+# Jalankan dengan port 80
+sudo docker run -d -p 80:5000 --name webhook-logger \
   --restart unless-stopped \
-  -v ~/logs:/app/logs \
   rmdhnaditya08/webhook-logger:latest
+
+# Verifikasi
+sudo docker ps
 ```
 
-### 5.3 Konfigurasi Firewall
+### 5.3 Verifikasi Deployment
 
 ```bash
-# Buka port 5000
-sudo ufw allow 5000
+curl http://20.189.79.171/health
 ```
 
-### 5.4 Verifikasi Deployment
-
-```bash
-curl http://<IP-VPS>:5000/health
-```
-
-<img width="850" height="64" alt="image" src="https://github.com/user-attachments/assets/4daea042-e3af-42b3-bbb6-a9c0d1accd46" />
-http://20.189.79.171:5000/health
+<img width="743" height="203" alt="image" src="https://github.com/user-attachments/assets/1afecd18-d4e0-47c5-b96f-15c58271292e" />
 
 ---
 
