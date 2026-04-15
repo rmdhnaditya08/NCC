@@ -14,48 +14,10 @@ Webhook Logger Service
 
 Service ini merupakan alternatif *self-hosted* dari layanan seperti Webhook.site, sehingga pengembang memiliki kontrol penuh atas data webhook yang diterima.
 
-### Fitur Utama
-
-- ✅ Menerima payload webhook melalui HTTP POST
-- ✅ Menyimpan log webhook secara persisten menggunakan Docker Volume
-- ✅ Menampilkan seluruh log yang masuk melalui endpoint GET
-- ✅ Menyediakan endpoint `/health` untuk health check
-- ✅ Mendukung penghapusan log melalui endpoint DELETE
-
-### Teknologi yang Digunakan
-
-| Teknologi | Keterangan |
-|---|---|
-| Python 3.11 | Bahasa pemrograman utama |
-| Flask 3.0.0 | Web framework |
-| Docker | Containerisasi service |
-| Docker Compose | Orkestrasi container |
-| Multi-stage Build | Optimasi ukuran image |
-
-### Struktur Project
-
-```
-webhook-logger/
-├── app.py              # Source code utama
-├── requirements.txt    # Dependensi Python
-├── Dockerfile          # Konfigurasi build image (multi-stage)
-└── docker-compose.yml  # Konfigurasi menjalankan service
-```
-
----
 
 ## 2. Penjelasan Endpoint `/health`
 
 Endpoint `/health` dirancang sebagai titik pemeriksaan kesehatan (*health check*) service. Endpoint ini digunakan untuk memverifikasi bahwa service sedang berjalan dan dapat merespons request dengan normal.
-
-### Daftar Endpoint
-
-| Endpoint | Method | Response Code | Deskripsi |
-|---|---|---|---|
-| `/health` | GET | `200 OK` | Health check — mengecek apakah service berjalan |
-| `/webhook` | POST | `200 OK` | Menerima payload webhook dari luar |
-| `/logs` | GET | `200 OK` | Menampilkan semua webhook yang masuk |
-| `/logs/clear` | DELETE | `200 OK` | Menghapus semua log yang tersimpan |
 
 ### Implementasi Kode
 
@@ -92,7 +54,7 @@ Content-Type: application/json
 
 Health Check di Lokal
 
-<img width="815" height="448" alt="image" src="https://github.com/user-attachments/assets/eb1dd67b-8389-42c1-9e88-54ca14d0edc1" />
+<img width="706" height="51" alt="image" src="https://github.com/user-attachments/assets/3df9eec7-ed17-4ec0-adae-7dc68813bf0f" />
 
 ---
 
@@ -142,7 +104,7 @@ services:
     build: .
     container_name: webhook-logger
     ports:
-      - "5000:5000"
+      - "80:80"
     restart: unless-stopped
     environment:
       - FLASK_ENV=production
