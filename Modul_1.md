@@ -1,24 +1,10 @@
-# 📋 Laporan Open Recruitment NCC 2026 — Pertemuan 1
+# 📋 Laporan Open Recruitment NCC 2026 — Modul 1
 
-> **Webhook Logger Service**
+Webhook Logger Service
 
-| | |
-|---|---|
-| **Nama** | [Isi Nama Kamu] |
-| **NRP** | [Isi NRP Kamu] |
-| **Bahasa / Framework** | Python / Flask |
-| **Docker Image** | `docker.io/[username]/webhook-logger:latest` |
+**Nama** : Mochamad Ramadhan Aditya Rachman 
 
----
-
-## 📑 Daftar Isi
-
-1. [Deskripsi Singkat Service](#1-deskripsi-singkat-service)
-2. [Penjelasan Endpoint /health](#2-penjelasan-endpoint-health)
-3. [Bukti Endpoint Dapat Diakses](#3-bukti-endpoint-dapat-diakses)
-4. [Proses Build dan Run Docker](#4-proses-build-dan-run-docker)
-5. [Proses Deployment ke VPS](#5-proses-deployment-ke-vps)
-6. [Kendala yang Dihadapi](#6-kendala-yang-dihadapi)
+**NRP** : 5025241129 
 
 ---
 
@@ -97,28 +83,16 @@ Content-Type: application/json
 ### Cara Test
 
 ```bash
-curl -v http://localhost:5000/health
+    curl -v http://localhost:5000/health
 ```
 
 ---
 
 ## 3. Bukti Endpoint Dapat Diakses
 
-### 3.1 Health Check di Lokal
+Health Check di Lokal
 
-> 📌 *Tambahkan screenshot hasil `curl http://localhost:5000/health`*
-
-### 3.2 Health Check Publik (VPS)
-
-> 📌 *Tambahkan screenshot hasil `curl http://<IP-VPS>:5000/health`*
-
-### 3.3 Webhook Diterima
-
-> 📌 *Tambahkan screenshot hasil POST ke `/webhook` dan GET ke `/logs`*
-
-### 3.4 Container Berjalan
-
-> 📌 *Tambahkan screenshot `docker compose ps` atau Docker Desktop yang menunjukkan container running*
+<img width="815" height="448" alt="image" src="https://github.com/user-attachments/assets/eb1dd67b-8389-42c1-9e88-54ca14d0edc1" />
 
 ---
 
@@ -159,13 +133,6 @@ EXPOSE 5000
 CMD ["python", "app.py"]
 ```
 
-**Perbandingan ukuran image:**
-
-| | Tanpa Multi-Stage | Dengan Multi-Stage |
-|---|---|---|
-| Ukuran image | ~900MB | ~150MB |
-| Build tools ikut terbawa | ✅ Ya | ❌ Tidak |
-| Production ready | ❌ | ✅ |
 
 ### 4.2 Docker Compose
 
@@ -199,11 +166,12 @@ docker compose logs -f
 docker compose down
 ```
 
-> 📌 *Tambahkan screenshot proses `docker compose up -d --build` berjalan sukses*
+<img width="1437" height="655" alt="image" src="https://github.com/user-attachments/assets/5ae293d3-a864-4e91-af8a-c4468093fe97" />
 
 ---
 
 ## 5. Proses Deployment ke VPS
+Proses deployment dilakukan pada Virtual Machine dengan sistem operasi Ubuntu 24.04 LTS yang dijalankan di platform Azure for Students.
 
 ### 5.1 Push Image ke Docker Hub
 
@@ -212,22 +180,23 @@ docker compose down
 docker login
 
 # Tag image
-docker tag webhook-logger [username]/webhook-logger:latest
+docker tag webhook-logger rmdhnaditya08/webhook-logger:latest
 
 # Push image
-docker push [username]/webhook-logger:latest
+docker push rmdhnaditya08/webhook-logger:latest
 ```
 
 ### 5.2 Pull dan Jalankan di VPS
 
 ```bash
-# Pull image dari Docker Hub
-docker pull [username]/webhook-logger:latest
+# Pull image terbaru
+sudo docker pull rmdhnaditya08/webhook-logger:latest
 
-# Jalankan container
-docker run -d -p 5000:5000 --name webhook-logger \
+# Jalankan container dengan port forwarding 5000
+sudo docker run -d -p 5000:5000 --name webhook-logger \
   --restart unless-stopped \
-  [username]/webhook-logger:latest
+  -v ~/logs:/app/logs \
+  rmdhnaditya08/webhook-logger:latest
 ```
 
 ### 5.3 Konfigurasi Firewall
@@ -243,25 +212,13 @@ sudo ufw allow 5000
 curl http://<IP-VPS>:5000/health
 ```
 
-> 📌 *Tambahkan screenshot verifikasi endpoint berjalan di VPS*
+<img width="850" height="64" alt="image" src="https://github.com/user-attachments/assets/4daea042-e3af-42b3-bbb6-a9c0d1accd46" />
+http://20.189.79.171:5000/health
 
 ---
 
 ## 6. Kendala yang Dihadapi
 
-| No | Kendala | Solusi | Status |
-|---|---|---|---|
-| 1 | `Dockerfile` tidak terbaca saat `docker build` — error: *no such file or directory* | File tersimpan sebagai `Dockerfile.txt`. Diperbaiki dengan rename menjadi `Dockerfile` tanpa ekstensi | ✅ Terselesaikan |
-| 2 | Container name conflict — error: *container name already in use* | Container lama dihapus terlebih dahulu dengan `docker stop && docker rm` sebelum menjalankan ulang | ✅ Terselesaikan |
-| 3 | [Isi kendala lain jika ada] | [Isi solusi] | |
+1. Kesulitan Mencari VPS yang gratis
 
-### Pembelajaran
 
-- Memahami cara kerja Docker dan containerisasi aplikasi Python
-- Memahami perbedaan antara `docker run` dan `docker compose`
-- Memahami konsep multi-stage build untuk mengoptimalkan ukuran image
-- Memahami alur deploy image dari lokal → Docker Hub → VPS
-
----
-
-*Open Recruitment Admin NCC 2026 — Pertemuan 1*
