@@ -1,4 +1,4 @@
-# NCC
+# NCC Modul 1
 📋 Laporan Open Recruitment NCC 2026 — Modul 1
 
 Webhook Logger Service
