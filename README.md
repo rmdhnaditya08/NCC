@@ -1,4 +1,4 @@
-# NCC
+# Modul 2
 
-Modul 1
-https://github.com/rmdhnaditya08/NCC/tree/Modul-1
+Mochamad Ramadhan Aditya Rachman
+5025241129
