@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        APP_ENV    = 'staging'
-        APP_NAME   = 'deploy-app'
+        APP_ENV  = 'staging'
+        APP_NAME = 'deploy-app'
     }
 
     stages {
@@ -34,6 +34,27 @@ pipeline {
                     pytest tests/ -v || \
                     echo "Skip test..."
                 '''
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                echo 'Menjalankan analisis SonarQube...'
+                script {
+                    def scannerHome = tool 'SonarScanner'
+                    withSonarQubeEnv() {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                echo 'Mengecek Quality Gate...'
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
 
