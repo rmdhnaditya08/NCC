@@ -1,4 +1,4 @@
-# Laporan CI/CD Pipeline — Pertemuan 2
+# Modul 2
 
 **Nama:** Mochamad Ramadhan Aditya Rachman  
 **Repository:** [rmdhnaditya08/NCC](https://github.com/rmdhnaditya08/NCC)  
